@@ -83,4 +83,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.encodeModified(List("hello")) should be (List("hello"))
   	Problems.encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e)))
   }
+
+  "12: decode" should "decode a run-length encoded list" in {
+  	Problems.decode[Any](Nil) should be (Nil)
+  	Problems.decode(List((1, "hello"))) should be (List("hello"))
+  	Problems.decode(List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))) should be (List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+  }
 }
