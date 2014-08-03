@@ -80,5 +80,17 @@ object Problems {
       case (len: Int, a: A) => List.fill(len)(a)
     })
 
-  def encodeDirect[A](as: List[A]): List[(Int, A)] = Nil
+  def encodeDirect[A](as: List[A]): List[(Int, A)] = {
+  	@tailrec
+  	def go(acc: List[(Int, A)], last: (Int, A), as: List[A]): List[(Int, A)] = as match {
+  	  case Nil => last :: acc
+  	  case a :: rest =>
+  	    if (a == last._2) go(acc, (last._1 + 1, a), rest)
+  	    else go(last :: acc, (1, a), rest)
+  	}
+  	as match {
+  	  case Nil => Nil
+  	  case a :: rest => reverse(go(Nil, (1, a), rest))
+  	}
+  }
 }
