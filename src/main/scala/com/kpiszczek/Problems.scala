@@ -68,4 +68,10 @@ object Problems {
 
   def encode[A](as: List[A]): List[(Int, A)] = 
     pack(as) flatMap ((a: List[A]) => List((length(a), a.head)))
+
+  def encodeModified[A](as: List[A]): List[_] =
+    pack(as) collect ((a: List[A]) => length(a) match {
+      case len if len > 1 => (len, a.head)
+      case 1 => a.head
+    })
 }

@@ -77,4 +77,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.encode(List("hello")) should be (List((1, "hello")))
   	Problems.encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
   }
+
+  "11: encodeModified" should "transfer only elements with duplicates as (N, E) single one should remain untouched" in {
+  	Problems.encodeModified[Any](Nil) should be (Nil)
+  	Problems.encodeModified(List("hello")) should be (List("hello"))
+  	Problems.encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e)))
+  }
 }
