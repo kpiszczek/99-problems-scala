@@ -5,4 +5,4 @@
 /project/target/
 /target/
 activator
-activator*
+activator.*
