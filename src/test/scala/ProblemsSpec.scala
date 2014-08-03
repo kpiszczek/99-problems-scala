@@ -95,4 +95,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.encodeDirect(List("hello")) should be (List((1, "hello")))
   	Problems.encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
   }
+
+  "14: duplicate" should "duplicate the elements of a list" in {
+  	Problems.duplicate[Any](Nil) should be (Nil)
+  	Problems.duplicate(List("hello")) should be (List("hello", "hello"))
+	Problems.duplicate(List('a, 'b, 'c, 'c, 'd)) should be (List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
+  }
 }

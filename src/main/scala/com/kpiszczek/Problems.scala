@@ -93,4 +93,6 @@ object Problems {
   	  case a :: rest => reverse(go(Nil, (1, a), rest))
   	}
   }
+
+  def duplicate[A](as: List[A]): List[A] = as flatMap ((a: A) => List(a, a))
 }
