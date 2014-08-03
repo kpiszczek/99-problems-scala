@@ -101,4 +101,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.duplicate(List("hello")) should be (List("hello", "hello"))
 	Problems.duplicate(List('a, 'b, 'c, 'c, 'd)) should be (List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
   }
+
+  "15: duplicateN" should "duplicate the elements of a list a given number of times" in {
+  	Problems.duplicateN[Any](153, Nil) should be (Nil)
+  	Problems.duplicateN(2, List("hello")) should be (List("hello", "hello"))
+	Problems.duplicateN(3, List('a, 'b, 'c, 'c, 'd)) should be (List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
+  }
 }

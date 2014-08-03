@@ -95,4 +95,6 @@ object Problems {
   }
 
   def duplicate[A](as: List[A]): List[A] = as flatMap ((a: A) => List(a, a))
+
+  def duplicateN[A](n: Int, as: List[A]): List[A] = as flatMap ((a: A) => List.fill(n)(a))
 }
