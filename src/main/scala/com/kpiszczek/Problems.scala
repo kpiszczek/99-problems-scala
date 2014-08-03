@@ -77,6 +77,8 @@ object Problems {
 
   def decode[A](as: List[(Int, A)]): List[A] =
     as flatMap ({
-      case (len: Int, a: A) => Nil
+      case (len: Int, a: A) => List.fill(len)(a)
     })
+
+  def encodeDirect[A](as: List[A]): List[(Int, A)] = Nil
 }

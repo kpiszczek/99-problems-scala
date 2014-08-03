@@ -89,4 +89,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.decode(List((1, "hello"))) should be (List("hello"))
   	Problems.decode(List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))) should be (List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
   }
+
+  "13: encodeDirect" should "compute run-length encoding of a list (direct solution)" in {
+  	Problems.encodeDirect[Any](Nil) should be (Nil)
+  	Problems.encodeDirect(List("hello")) should be (List((1, "hello")))
+  	Problems.encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
+  }
 }
