@@ -97,4 +97,9 @@ object Problems {
   def duplicate[A](as: List[A]): List[A] = as flatMap ((a: A) => List(a, a))
 
   def duplicateN[A](n: Int, as: List[A]): List[A] = as flatMap ((a: A) => List.fill(n)(a))
+
+  def drop[A](n: Int, as: List[A]): List[A] = 
+    as.zipWithIndex collect ({
+    	case (a: A, i: Int) if (i + 1) % 3 != 0 => a
+    })
 }
