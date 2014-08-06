@@ -104,13 +104,11 @@ object Problems {
     })
 
   def split[A](n: Int, as: List[A]): (List[A], List[A]) = {
-    def reducer(acc: (List[A], List[A]), a: (A, Int)) =
+    def reducer(a: (A, Int), acc: (List[A], List[A])) =
       if (a._2 >= n) (acc._1, a._1 :: acc._2)
       else (a._1 :: acc._1, acc._2)
 
-    val res = as.zipWithIndex.foldLeft[(List[A], List[A])]((Nil, Nil))(reducer)
-
-    (reverse(res._1), reverse(res._2))
+    as.zipWithIndex.foldRight[(List[A], List[A])]((Nil, Nil))(reducer)
   }
 
   def slice[A](n: Int, k: Int, as: List[A]): List[A] =
