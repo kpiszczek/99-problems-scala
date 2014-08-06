@@ -144,4 +144,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
  	Problems.insertAt("hi", 0, List("hello")) should be(List("hi", "hello"))
  	Problems.insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
   }
+
+ "22: range" should "create a list containing all integers within a given range" in {
+   Problems.range(1, -1) should be (Nil)
+   Problems.range(1, 1) should be(List(1))
+   Problems.range(4, 9) should be(List(4, 5, 6, 7, 8, 9))
+ }
 }

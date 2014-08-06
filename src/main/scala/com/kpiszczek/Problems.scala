@@ -139,4 +139,14 @@ object Problems {
   	  else elem._1 :: acc
   	as.zipWithIndex.foldRight[List[A]](Nil)(reducer)
   }
+
+  def range(start: Int, end: Int): List[Int] = {
+  	@tailrec
+  	def go(idx: Int, acc: List[Int]): List[Int] = 
+  	  if (idx == start) idx :: acc
+  	  else go(idx - 1, idx :: acc)
+  	if (end < start) Nil
+  	else go(end, Nil)
+  }
+
 }
