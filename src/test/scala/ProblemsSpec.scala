@@ -132,4 +132,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
   	Problems.rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
   }
+
+  "20: removeAt" should "Return the list and the removed element in a Tuple" in {
+  	Problems.removeAt[Any](1, Nil) should be ((Nil, None))
+  	Problems.removeAt(0, List("hello")) should be ((Nil, Some("hello")))
+  	Problems.removeAt(1, List('a, 'b, 'c, 'd)) should be ((List('a, 'c, 'd),Some('b)))
+  }
 }

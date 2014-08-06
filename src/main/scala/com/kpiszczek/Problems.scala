@@ -122,4 +122,14 @@ object Problems {
   	def revConcat(a: (List[A], List[A])) = a._2 ::: a._1
   	revConcat(if (n >= 0) as.splitAt(n) else as.splitAt(as.length + n))
   }
+
+  def removeAt[A](n: Int, as: List[A]): (List[A], Option[A]) = {
+  	def reducer(a: (A, Int), acc: (List[A], Option[A])) = {
+      val idx = a._2
+      val elem = a._1
+      if (idx == n) (acc._1, Some(elem))
+      else (elem :: acc._1, acc._2)
+  	}
+  	as.zipWithIndex.foldRight[(List[A], Option[A])]((Nil, None))(reducer)
+  }
 }	
