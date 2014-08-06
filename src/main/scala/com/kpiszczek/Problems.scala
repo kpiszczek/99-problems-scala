@@ -132,4 +132,11 @@ object Problems {
     }
     as.zipWithIndex.foldRight[(List[A], Option[A])]((Nil, None))(reducer)
   }
+
+  def insertAt[A](a: A, k: Int, as: List[A]): List[A] = {
+  	def reducer(elem: (A, Int), acc: List[A]) = 
+  	  if (elem._2 == k) a :: elem._1 :: acc
+  	  else elem._1 :: acc
+  	as.zipWithIndex.foldRight[List[A]](Nil)(reducer)
+  }
 }

@@ -138,4 +138,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
     Problems.removeAt(0, List("hello")) should be((Nil, Some("hello")))
     Problems.removeAt(1, List('a, 'b, 'c, 'd)) should be((List('a, 'c, 'd), Some('b)))
   }
+
+  "21: insertAt" should "insert an element at a given position into a list" in {
+ 	Problems.insertAt(1, 1, Nil) should be(Nil)
+ 	Problems.insertAt("hi", 0, List("hello")) should be(List("hi", "hello"))
+ 	Problems.insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
+  }
 }
