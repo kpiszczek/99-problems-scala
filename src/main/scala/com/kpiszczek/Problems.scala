@@ -81,55 +81,55 @@ object Problems {
     })
 
   def encodeDirect[A](as: List[A]): List[(Int, A)] = {
-  	@tailrec
-  	def go(acc: List[(Int, A)], last: (Int, A), as: List[A]): List[(Int, A)] = as match {
-  	  case Nil => last :: acc
-  	  case a :: rest =>
-  	    if (a == last._2) go(acc, (last._1 + 1, a), rest)
-  	    else go(last :: acc, (1, a), rest)
-  	}
-  	as match {
-  	  case Nil => Nil
-  	  case a :: rest => reverse(go(Nil, (1, a), rest))
-  	}
+    @tailrec
+    def go(acc: List[(Int, A)], last: (Int, A), as: List[A]): List[(Int, A)] = as match {
+      case Nil => last :: acc
+      case a :: rest =>
+        if (a == last._2) go(acc, (last._1 + 1, a), rest)
+        else go(last :: acc, (1, a), rest)
+    }
+    as match {
+      case Nil => Nil
+      case a :: rest => reverse(go(Nil, (1, a), rest))
+    }
   }
 
   def duplicate[A](as: List[A]): List[A] = as flatMap ((a: A) => List(a, a))
 
   def duplicateN[A](n: Int, as: List[A]): List[A] = as flatMap ((a: A) => List.fill(n)(a))
 
-  def drop[A](n: Int, as: List[A]): List[A] = 
+  def drop[A](n: Int, as: List[A]): List[A] =
     as.zipWithIndex collect ({
-    	case (a: A, i: Int) if (i + 1) % 3 != 0 => a
+      case (a: A, i: Int) if (i + 1) % 3 != 0 => a
     })
 
   def split[A](n: Int, as: List[A]): (List[A], List[A]) = {
-    def reducer(acc: (List[A], List[A]), a: (A, Int)) = 
+    def reducer(acc: (List[A], List[A]), a: (A, Int)) =
       if (a._2 >= n) (acc._1, a._1 :: acc._2)
-	  else (a._1 :: acc._1, acc._2)
+      else (a._1 :: acc._1, acc._2)
 
     val res = as.zipWithIndex.foldLeft[(List[A], List[A])]((Nil, Nil))(reducer)
 
     (reverse(res._1), reverse(res._2))
   }
 
-  def slice[A](n: Int, k: Int, as: List[A]): List[A] = 
+  def slice[A](n: Int, k: Int, as: List[A]): List[A] =
     as.zipWithIndex collect ({
       case (a: A, i: Int) if (i >= n && i < k) => a
     })
 
   def rotate[A](n: Int, as: List[A]): List[A] = {
-  	def revConcat(a: (List[A], List[A])) = a._2 ::: a._1
-  	revConcat(if (n >= 0) as.splitAt(n) else as.splitAt(as.length + n))
+    def revConcat(a: (List[A], List[A])) = a._2 ::: a._1
+    revConcat(if (n >= 0) as.splitAt(n) else as.splitAt(as.length + n))
   }
 
   def removeAt[A](n: Int, as: List[A]): (List[A], Option[A]) = {
-  	def reducer(a: (A, Int), acc: (List[A], Option[A])) = {
+    def reducer(a: (A, Int), acc: (List[A], Option[A])) = {
       val idx = a._2
       val elem = a._1
       if (idx == n) (acc._1, Some(elem))
       else (elem :: acc._1, acc._2)
-  	}
-  	as.zipWithIndex.foldRight[(List[A], Option[A])]((Nil, None))(reducer)
+    }
+    as.zipWithIndex.foldRight[(List[A], Option[A])]((Nil, None))(reducer)
   }
-}	
+}
