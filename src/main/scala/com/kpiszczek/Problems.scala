@@ -112,4 +112,9 @@ object Problems {
 
     (reverse(res._1), reverse(res._2))
   }
+
+  def slice[A](n: Int, k: Int, as: List[A]): List[A] = 
+    as.zipWithIndex collect ({
+      case (a: A, i: Int) if (i >= n && i < k) => a
+    })
 }	

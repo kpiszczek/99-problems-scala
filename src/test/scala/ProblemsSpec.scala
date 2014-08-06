@@ -119,4 +119,10 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.split(2, List("hello")) should be ((List("hello"), Nil))
   	Problems.split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be ((List('a, 'b, 'c), List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
   }
+
+  "18: slice" should "extract a slice from a list" in {
+  	Problems.slice[Any](2, 5, Nil) should be (Nil)
+  	Problems.slice(0, 3, List("hello")) should be (List("hello"))
+  	Problems.slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g))
+  }
 }
