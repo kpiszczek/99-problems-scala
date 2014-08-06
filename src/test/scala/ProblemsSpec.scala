@@ -125,4 +125,11 @@ class ProblemsSpec extends FlatSpec with Matchers {
   	Problems.slice(0, 3, List("hello")) should be (List("hello"))
   	Problems.slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g))
   }
+
+  "19: rotate" should "rotate a list N places to the left" in {
+  	Problems.rotate[Any](2, Nil) should be (Nil)
+  	Problems.rotate(3, List("hello")) should be (List("hello"))
+  	Problems.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+  	Problems.rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+  }
 }

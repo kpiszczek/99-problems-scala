@@ -117,4 +117,9 @@ object Problems {
     as.zipWithIndex collect ({
       case (a: A, i: Int) if (i >= n && i < k) => a
     })
+
+  def rotate[A](n: Int, as: List[A]): List[A] = {
+  	def revConcat(a: (List[A], List[A])) = a._2 ::: a._1
+  	revConcat(if (n >= 0) as.splitAt(n) else as.splitAt(as.length + n))
+  }
 }	
