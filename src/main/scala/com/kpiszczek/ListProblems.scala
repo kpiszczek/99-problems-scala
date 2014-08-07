@@ -1,8 +1,9 @@
 package com.kpiszczek
 
 import scala.annotation.tailrec
+import scala.reflect.ClassTag
 
-object Problems {
+object ListProblems {
   @tailrec
   def last[A](as: List[A]): Option[A] = as match {
     case Nil => None
@@ -75,7 +76,7 @@ object Problems {
       case 1 => a.head
     })
 
-  def decode[A](as: List[(Int, A)]): List[A] =
+  def decode[A : ClassTag](as: List[(Int, A)]): List[A] =
     as flatMap ({
       case (len: Int, a: A) => List.fill(len)(a)
     })
@@ -98,7 +99,7 @@ object Problems {
 
   def duplicateN[A](n: Int, as: List[A]): List[A] = as flatMap ((a: A) => List.fill(n)(a))
 
-  def drop[A](n: Int, as: List[A]): List[A] =
+  def drop[A : ClassTag](n: Int, as: List[A]): List[A] =
     as.zipWithIndex collect ({
       case (a: A, i: Int) if (i + 1) % 3 != 0 => a
     })
@@ -111,7 +112,7 @@ object Problems {
     as.zipWithIndex.foldRight[(List[A], List[A])]((Nil, Nil))(reducer)
   }
 
-  def slice[A](n: Int, k: Int, as: List[A]): List[A] =
+  def slice[A : ClassTag](n: Int, k: Int, as: List[A]): List[A] =
     as.zipWithIndex collect ({
       case (a: A, i: Int) if (i >= n && i < k) => a
     })
@@ -132,19 +133,21 @@ object Problems {
   }
 
   def insertAt[A](a: A, k: Int, as: List[A]): List[A] = {
-  	def reducer(elem: (A, Int), acc: List[A]) = 
-  	  if (elem._2 == k) a :: elem._1 :: acc
-  	  else elem._1 :: acc
-  	as.zipWithIndex.foldRight[List[A]](Nil)(reducer)
+    def reducer(elem: (A, Int), acc: List[A]) =
+      if (elem._2 == k) a :: elem._1 :: acc
+      else elem._1 :: acc
+    as.zipWithIndex.foldRight[List[A]](Nil)(reducer)
   }
 
   def range(start: Int, end: Int): List[Int] = {
-  	@tailrec
-  	def go(idx: Int, acc: List[Int]): List[Int] = 
-  	  if (idx == start) idx :: acc
-  	  else go(idx - 1, idx :: acc)
-  	if (end < start) Nil
-  	else go(end, Nil)
+    @tailrec
+    def go(idx: Int, acc: List[Int]): List[Int] =
+      if (idx == start) idx :: acc
+      else go(idx - 1, idx :: acc)
+    if (end < start) Nil
+    else go(end, Nil)
   }
+
+  def randomSelect[A](n: Int, as: List[A]): Option[List[A]] = None
 
 }
