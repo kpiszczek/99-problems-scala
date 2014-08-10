@@ -2,6 +2,7 @@ package com.kpiszczek
 
 import scala.annotation.tailrec
 import scala.reflect.ClassTag
+import scala.util.Random
 
 object ListProblems {
   @tailrec
@@ -148,6 +149,18 @@ object ListProblems {
     else go(end, Nil)
   }
 
-  def randomSelect[A](n: Int, as: List[A]): Option[List[A]] = None
-
+  def randomSelect[A](n: Int, as: List[A]): Option[List[A]] = {
+  	val random = new Random(System.currentTimeMillis)
+  	val length = as.length
+  	def go(acc: List[A], as: List[A], i: Int): List[A] = {
+  	  if (i == n) acc
+  	  else {
+  	  	val (tail, a) = removeAt[A](random.nextInt(length - i), as)
+  	  	// cannot be None
+  	  	go(a.get :: acc, tail, i + 1)
+  	  }
+  	}
+  	if (n > length) None
+  	else Some(go(Nil, as, 0))
+  }
 }
