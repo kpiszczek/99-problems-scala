@@ -163,4 +163,10 @@ class ListProblemsSpec extends FlatSpec with Matchers {
   	val res = ListProblems.lotto(6, 49)
   	res.value.length should be (6)
   }
+
+  "25: randomPermute" should "generate a random permutation of the elements of a list" in {
+  	val input = List('a, 'b, 'c, 'd, 'e, 'f)
+  	val result = ListProblems.randomPermute(input)
+  	result should contain theSameElementsAs (input)
+  }
 }

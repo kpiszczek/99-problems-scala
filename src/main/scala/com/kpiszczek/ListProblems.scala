@@ -165,4 +165,6 @@ object ListProblems {
   }
 
   def lotto(n: Int, k: Int): Option[List[Int]] = randomSelect(n, range(1, k))
+
+  def randomPermute[A](as: List[A]): List[A] = randomSelect(as.length, as).get
 }
