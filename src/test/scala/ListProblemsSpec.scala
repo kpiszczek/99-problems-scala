@@ -158,4 +158,9 @@ class ListProblemsSpec extends FlatSpec with Matchers {
   	val res = ListProblems.randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h))
   	res.value.length should be (3)
   }
+
+  "24: lotto" should "Draw N different random numbers from the set 1..M" in {
+  	val res = ListProblems.lotto(6, 49)
+  	res.value.length should be (6)
+  }
 }

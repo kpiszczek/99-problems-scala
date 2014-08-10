@@ -163,4 +163,6 @@ object ListProblems {
   	if (n > length) None
   	else Some(go(Nil, as, 0))
   }
+
+  def lotto(n: Int, k: Int): Option[List[Int]] = randomSelect(n, range(1, k))
 }
