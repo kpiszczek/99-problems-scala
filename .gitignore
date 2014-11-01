@@ -6,6 +6,6 @@
 /target/
 activator
 activator.*
-.idea/
-.idea_modules/
+/.idea/
+/.idea_modules/
 *.iml
