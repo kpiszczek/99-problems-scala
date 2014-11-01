@@ -71,11 +71,11 @@ object ListProblems {
   def encode[A](as: List[A]): List[(Int, A)] =
     pack(as) flatMap ((a: List[A]) => List((length(a), a.head)))
 
-  def encodeModified[A](as: List[A]): List[_] =
-    pack(as) collect ((a: List[A]) => length(a) match {
+  def encodeModified[A : ClassTag](as: List[A]): List[_] =
+    pack(as) collect {case a: List[A] => length(a) match {
       case len if len > 1 => (len, a.head)
       case 1 => a.head
-    })
+    }}
 
   def decode[A : ClassTag](as: List[(Int, A)]): List[A] =
     as flatMap ({
@@ -101,9 +101,9 @@ object ListProblems {
   def duplicateN[A](n: Int, as: List[A]): List[A] = as flatMap ((a: A) => List.fill(n)(a))
 
   def drop[A : ClassTag](n: Int, as: List[A]): List[A] =
-    as.zipWithIndex collect ({
+    List(as.zipWithIndex collect ({
       case (a: A, i: Int) if (i + 1) % 3 != 0 => a
-    })
+    }): _*)
 
   def split[A](n: Int, as: List[A]): (List[A], List[A]) = {
     def reducer(a: (A, Int), acc: (List[A], List[A])) =
@@ -114,9 +114,9 @@ object ListProblems {
   }
 
   def slice[A : ClassTag](n: Int, k: Int, as: List[A]): List[A] =
-    as.zipWithIndex collect ({
+    List(as.zipWithIndex collect ({
       case (a: A, i: Int) if (i >= n && i < k) => a
-    })
+    }):_*)
 
   def rotate[A](n: Int, as: List[A]): List[A] = {
     def revConcat(a: (List[A], List[A])) = a._2 ::: a._1
@@ -150,21 +150,33 @@ object ListProblems {
   }
 
   def randomSelect[A](n: Int, as: List[A]): Option[List[A]] = {
-  	val random = new Random(System.currentTimeMillis)
-  	val length = as.length
-  	def go(acc: List[A], as: List[A], i: Int): List[A] = {
-  	  if (i == n) acc
-  	  else {
-  	  	val (tail, a) = removeAt[A](random.nextInt(length - i), as)
-  	  	// cannot be None
-  	  	go(a.get :: acc, tail, i + 1)
-  	  }
-  	}
-  	if (n > length) None
-  	else Some(go(Nil, as, 0))
+    val random = new Random(System.currentTimeMillis)
+    val length = as.length
+    def go(acc: List[A], as: List[A], i: Int): List[A] = {
+      if (i == n) acc
+      else {
+        val (tail, a) = removeAt[A](random.nextInt(length - i), as)
+        // cannot be None
+        go(a.get :: acc, tail, i + 1)
+      }
+    }
+    if (n > length) None
+    else Some(go(Nil, as, 0))
   }
 
   def lotto(n: Int, k: Int): Option[List[Int]] = randomSelect(n, range(1, k))
 
   def randomPermute[A](as: List[A]): List[A] = randomSelect(as.length, as).get
+
+  def combinations[A](n: Int, as: List[A]): List[List[A]] = (n, as) match {
+    case (_, Nil) ⇒ Nil
+    case (0, _) ⇒ List(Nil)
+    case (n, h :: t) ⇒ (combinations(n - 1, t) map (h :: _)) ::: combinations(n, t)
+  }
+
+  def lsort[A](as: List[List[A]]): List[List[A]] =
+    as sortBy (_.length)
+
+  def lsortFreq[A](as: List[List[A]]): List[List[A]] =
+    as.groupBy(_.length).toList sortBy (_._2.length) map (_._2) flatten
 }

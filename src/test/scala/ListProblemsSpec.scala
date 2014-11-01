@@ -4,35 +4,36 @@ import org.scalatest.OptionValues._
 import com.kpiszczek.ListProblems
 
 class ListProblemsSpec extends FlatSpec with Matchers {
+  import ListProblems._
   "1: last" should "return None if list is empty" in {
-    ListProblems.last[Any](Nil) should be(None)
+    last[Any](Nil) should be(None)
   }
   it should "return last element of non-empty list" in {
-    ListProblems.last(1 :: 2 :: 3 :: Nil) should be(Some(3))
-    ListProblems.last(List(1, 1, 2, 3, 5, 8)) should be(Some(8))
-    ListProblems.last(1 :: Nil) should be(Some(1))
+    last(1 :: 2 :: 3 :: Nil) should be(Some(3))
+    last(List(1, 1, 2, 3, 5, 8)) should be(Some(8))
+    last(1 :: Nil) should be(Some(1))
   }
 
   "2: penultimate" should "return None if list is empty" in {
-    ListProblems.penultimate[Any](Nil) should be(None)
+    penultimate[Any](Nil) should be(None)
   }
   it should "return pre-last element of non-empty list" in {
-    ListProblems.penultimate(1 :: 2 :: 3 :: Nil) should be(Some(2))
-    ListProblems.penultimate(List(1, 1, 2, 3, 5, 8)) should be(Some(5))
+    penultimate(1 :: 2 :: 3 :: Nil) should be(Some(2))
+    penultimate(List(1, 1, 2, 3, 5, 8)) should be(Some(5))
   }
   it should "return None if list has only one element" in {
-    ListProblems.penultimate(1 :: Nil) should be(None)
+    penultimate(1 :: Nil) should be(None)
   }
 
   "3: nth" should "return None if list is empty" in {
-    ListProblems.penultimate[Any](Nil) should be(None)
+    penultimate[Any](Nil) should be(None)
   }
   it should "return nth element of non-empty list" in {
-    ListProblems.nth(0, 1 :: 2 :: 3 :: Nil) should be(Some(1))
-    ListProblems.nth(2, List(1, 1, 2, 3, 5, 8)) should be(Some(2))
+    nth(0, 1 :: 2 :: 3 :: Nil) should be(Some(1))
+    nth(2, List(1, 1, 2, 3, 5, 8)) should be(Some(2))
   }
   it should "return None if list in shorter than n-elements" in {
-    ListProblems.nth(2, 1 :: Nil) should be(None)
+    nth(2, 1 :: Nil) should be(None)
   }
 
   "4: length" should "count number of elements in a list" in {
@@ -42,131 +43,146 @@ class ListProblemsSpec extends FlatSpec with Matchers {
   }
 
   "5: reverse" should "make a reversed list" in {
-    ListProblems.reverse[Any](Nil) should be(Nil)
-    ListProblems.reverse("hello" :: Nil) should be(List("hello"))
-    ListProblems.reverse(List(1, 1, 2, 3, 5, 8)) should be(List(8, 5, 3, 2, 1, 1))
+    reverse[Any](Nil) should be(Nil)
+    reverse("hello" :: Nil) should be(List("hello"))
+    reverse(List(1, 1, 2, 3, 5, 8)) should be(List(8, 5, 3, 2, 1, 1))
   }
 
   "6: isPalindrome" should "check if given list is a palindrome" in {
-    ListProblems.isPalindrome[Any](Nil) should be(true)
-    ListProblems.isPalindrome("hello" :: Nil) should be(true)
-    ListProblems.isPalindrome(List(1, 1, 2, 3, 5, 8)) should be(false)
-    ListProblems.isPalindrome(List(1, 2, 3, 2, 1)) should be(true)
+    isPalindrome[Any](Nil) should be(true)
+    isPalindrome("hello" :: Nil) should be(true)
+    isPalindrome(List(1, 1, 2, 3, 5, 8)) should be(false)
+    isPalindrome(List(1, 2, 3, 2, 1)) should be(true)
   }
 
   "7: flatten" should "flatten a nested list structure" in {
-    ListProblems.flatten(Nil: List[Any]) should be(Nil)
-    ListProblems.flatten("hello" :: Nil) should be(List("hello"))
-    ListProblems.flatten(List(List(1, 1), 2, List(3, List(5, 8)))) should be(List(1, 1, 2, 3, 5, 8))
+    flatten(Nil: List[Any]) should be(Nil)
+    flatten("hello" :: Nil) should be(List("hello"))
+    flatten(List(List(1, 1), 2, List(3, List(5, 8)))) should be(List(1, 1, 2, 3, 5, 8))
   }
 
   "8: compress" should "eliminate consecutive duplicates of list elements" in {
-    ListProblems.compress[Any](Nil) should be(Nil)
-    ListProblems.compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List('a, 'b, 'c, 'a, 'd, 'e))
-    ListProblems.compress(List("hello")) should be(List("hello"))
-    ListProblems.compress(List(1, 1, 2, 3, 5, 8)) should be(List(1, 2, 3, 5, 8))
+    compress[Any](Nil) should be(Nil)
+    compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List('a, 'b, 'c, 'a, 'd, 'e))
+    compress(List("hello")) should be(List("hello"))
+    compress(List(1, 1, 2, 3, 5, 8)) should be(List(1, 2, 3, 5, 8))
   }
 
   "9: pack" should "pack consecutive duplicates of list elements into sublists" in {
-    ListProblems.pack[Any](Nil) should be(Nil)
-    ListProblems.pack(List("hello")) should be(List(List("hello")))
-    ListProblems.pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e)))
+    pack[Any](Nil) should be(Nil)
+    pack(List("hello")) should be(List(List("hello")))
+    pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e)))
   }
 
   "10: encode" should "run-length encoding of a list" in {
-    ListProblems.encode[Any](Nil) should be(Nil)
-    ListProblems.encode(List("hello")) should be(List((1, "hello")))
-    ListProblems.encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
+    encode[Any](Nil) should be(Nil)
+    encode(List("hello")) should be(List((1, "hello")))
+    encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
   }
 
   "11: encodeModified" should "transfer only elements with duplicates as (N, E) single one should remain untouched" in {
-    ListProblems.encodeModified[Any](Nil) should be(Nil)
-    ListProblems.encodeModified(List("hello")) should be(List("hello"))
-    ListProblems.encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), 'b, (2, 'c), (2, 'a), 'd, (4, 'e)))
+    encodeModified[Any](Nil) should be(Nil)
+    encodeModified(List("hello")) should be(List("hello"))
+    encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), 'b, (2, 'c), (2, 'a), 'd, (4, 'e)))
   }
 
   "12: decode" should "decode a run-length encoded list" in {
-    ListProblems.decode[Any](Nil) should be(Nil)
-    ListProblems.decode(List((1, "hello"))) should be(List("hello"))
-    ListProblems.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) should be(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+    decode[Any](Nil) should be(Nil)
+    decode(List((1, "hello"))) should be(List("hello"))
+    decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) should be(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
   }
 
   "13: encodeDirect" should "compute run-length encoding of a list (direct solution)" in {
-    ListProblems.encodeDirect[Any](Nil) should be(Nil)
-    ListProblems.encodeDirect(List("hello")) should be(List((1, "hello")))
-    ListProblems.encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
+    encodeDirect[Any](Nil) should be(Nil)
+    encodeDirect(List("hello")) should be(List((1, "hello")))
+    encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
   }
 
   "14: duplicate" should "duplicate the elements of a list" in {
-    ListProblems.duplicate[Any](Nil) should be(Nil)
-    ListProblems.duplicate(List("hello")) should be(List("hello", "hello"))
-    ListProblems.duplicate(List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
+    duplicate[Any](Nil) should be(Nil)
+    duplicate(List("hello")) should be(List("hello", "hello"))
+    duplicate(List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
   }
 
   "15: duplicateN" should "duplicate the elements of a list a given number of times" in {
-    ListProblems.duplicateN[Any](153, Nil) should be(Nil)
-    ListProblems.duplicateN(2, List("hello")) should be(List("hello", "hello"))
-    ListProblems.duplicateN(3, List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
+    duplicateN[Any](153, Nil) should be(Nil)
+    duplicateN(2, List("hello")) should be(List("hello", "hello"))
+    duplicateN(3, List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
   }
 
   "16: drop" should "drop every Nth element from a list" in {
-    ListProblems.drop[Any](4, Nil) should be(Nil)
-    ListProblems.drop(2, List("hello")) should be(List("hello"))
-    ListProblems.drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
+    drop[Any](4, Nil) should be(Nil)
+    drop(2, List("hello")) should be(List("hello"))
+    drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
   }
 
   "17: split" should "split list into two" in {
-    ListProblems.split[Any](4, Nil) should be((Nil, Nil))
-    ListProblems.split(2, List("hello")) should be((List("hello"), Nil))
-    ListProblems.split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be((List('a, 'b, 'c), List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
+    split[Any](4, Nil) should be((Nil, Nil))
+    split(2, List("hello")) should be((List("hello"), Nil))
+    split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be((List('a, 'b, 'c), List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
   }
 
   "18: slice" should "extract a slice from a list" in {
-    ListProblems.slice[Any](2, 5, Nil) should be(Nil)
-    ListProblems.slice(0, 3, List("hello")) should be(List("hello"))
-    ListProblems.slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g))
+    slice[Any](2, 5, Nil) should be(Nil)
+    slice(0, 3, List("hello")) should be(List("hello"))
+    slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g))
   }
 
   "19: rotate" should "rotate a list N places to the left" in {
-    ListProblems.rotate[Any](2, Nil) should be(Nil)
-    ListProblems.rotate(3, List("hello")) should be(List("hello"))
-    ListProblems.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
-    ListProblems.rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+    rotate[Any](2, Nil) should be(Nil)
+    rotate(3, List("hello")) should be(List("hello"))
+    rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+    rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
   }
 
   "20: removeAt" should "Return the list and the removed element in a Tuple" in {
-    ListProblems.removeAt[Any](1, Nil) should be((Nil, None))
-    ListProblems.removeAt(0, List("hello")) should be((Nil, Some("hello")))
-    ListProblems.removeAt(1, List('a, 'b, 'c, 'd)) should be((List('a, 'c, 'd), Some('b)))
+    removeAt[Any](1, Nil) should be((Nil, None))
+    removeAt(0, List("hello")) should be((Nil, Some("hello")))
+    removeAt(1, List('a, 'b, 'c, 'd)) should be((List('a, 'c, 'd), Some('b)))
   }
 
   "21: insertAt" should "insert an element at a given position into a list" in {
-    ListProblems.insertAt(1, 1, Nil) should be(Nil)
-    ListProblems.insertAt("hi", 0, List("hello")) should be(List("hi", "hello"))
-    ListProblems.insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
+    insertAt(1, 1, Nil) should be(Nil)
+    insertAt("hi", 0, List("hello")) should be(List("hi", "hello"))
+    insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
   }
 
   "22: range" should "create a list containing all integers within a given range" in {
-    ListProblems.range(1, -1) should be(Nil)
-    ListProblems.range(1, 1) should be(List(1))
-    ListProblems.range(4, 9) should be(List(4, 5, 6, 7, 8, 9))
+    range(1, -1) should be(Nil)
+    range(1, 1) should be(List(1))
+    range(4, 9) should be(List(4, 5, 6, 7, 8, 9))
   }
 
   "23: randomSelect" should "Extract a given number of randomly selected elements from a list" in {
-  	ListProblems.randomSelect[Any](3, Nil) should be (None)
-  	ListProblems.randomSelect(3, List("hello")) should be (None)
-  	val res = ListProblems.randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h))
+  	randomSelect[Any](3, Nil) should be (None)
+  	randomSelect(3, List("hello")) should be (None)
+  	val res = randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h))
   	res.value.length should be (3)
   }
 
   "24: lotto" should "Draw N different random numbers from the set 1..M" in {
-  	val res = ListProblems.lotto(6, 49)
+  	val res = lotto(6, 49)
   	res.value.length should be (6)
   }
 
   "25: randomPermute" should "generate a random permutation of the elements of a list" in {
   	val input = List('a, 'b, 'c, 'd, 'e, 'f)
-  	val result = ListProblems.randomPermute(input)
+  	val result = randomPermute(input)
   	result should contain theSameElementsAs (input)
+  }
+
+  "26: combinations" should "generate all n-element combinations of given list" in {
+    val l = combinations(4, List('a, 'b, 'c, 'd, 'e, 'f))
+    l.length should be (20)
+  }
+
+  "28a: lsort" should "sort a list of lists according to length of sublists" in {
+    val l = lsort(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o)))
+    l should be (List(List('o), List('d, 'e), List('d, 'e), List('m, 'n), List('a, 'b, 'c), List('f, 'g, 'h), List('i, 'j, 'k, 'l)))
+  }
+
+  "28b: lsortFreq" should "sort the elements according to their length frequency" in {
+    val l = lsortFreq(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o)))
+    l should be (List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n)))
   }
 }
